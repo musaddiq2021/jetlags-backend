@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from app.api.flights import router as flights_router
+from app.api.dashboard import router as dashboard_router
 
 app = FastAPI(
     title="Jetlags Backend API",
@@ -8,6 +9,7 @@ app = FastAPI(
 )
 
 app.include_router(flights_router, prefix="/api")
+app.include_router(dashboard_router, prefix="/api")
 
 @app.get("/")
 def home():
