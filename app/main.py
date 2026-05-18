@@ -1,10 +1,13 @@
 from fastapi import FastAPI
+from app.api.flights import router as flights_router
 
 app = FastAPI(
     title="Jetlags Backend API",
     description="Backend API for Jetlags aviation disruption intelligence platform",
     version="0.1.0"
 )
+
+app.include_router(flights_router, prefix="/api")
 
 @app.get("/")
 def home():
@@ -20,33 +23,3 @@ def health_check():
         "service": "Jetlags Backend API"
     }
 
-#FALSE DATRA ENDPOINT
-@app.get("/api/flights/live")
-def get_live_flights():
-    return {
-        "status": "ok",
-        "source": "mock-data",
-        "flights": [
-            {
-                "flight": "EK001",
-                "route": "DXB → LHR",
-                "status": "Delayed",
-                "delay": "+48m",
-                "risk": "High"
-            },
-            {
-                "flight": "EK215",
-                "route": "DXB → LAX",
-                "status": "On Time",
-                "delay": "—",
-                "risk": "Low"
-            },
-            {
-                "flight": "BA142",
-                "route": "DEL → LHR",
-                "status": "Monitoring",
-                "delay": "+20m",
-                "risk": "Medium"
-            }
-        ]
-    }
